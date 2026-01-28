@@ -12,6 +12,7 @@ import net.blueva.arcade.modules.allagainstall.support.SupplyService;
 import net.blueva.arcade.modules.allagainstall.support.loadout.PlayerLoadoutService;
 import net.blueva.arcade.modules.allagainstall.support.outcome.OutcomeService;
 import net.blueva.arcade.modules.allagainstall.support.combat.CombatService;
+import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -116,6 +117,8 @@ public class AllAgainstAllGame {
             return;
         }
 
+        updateWorldDifficulty(state);
+
         startGameTimer(context, state);
 
         for (Player player : context.getPlayers()) {
@@ -132,6 +135,11 @@ public class AllAgainstAllGame {
         int arenaId = context.getArenaId();
         context.getSchedulerAPI().cancelArenaTasks(arenaId);
 
+        ArenaState state = arenas.get(arenaId);
+        if (state != null) {
+            restoreWorldDifficulty(state);
+        }
+
         arenas.remove(arenaId);
         removePlayersFromArena(arenaId, context.getPlayers());
 
@@ -146,6 +154,7 @@ public class AllAgainstAllGame {
         Set<ArenaState> states = Set.copyOf(arenas.values());
         for (ArenaState state : states) {
             state.getContext().getSchedulerAPI().cancelModuleTasks("all_against_all");
+            restoreWorldDifficulty(state);
         }
 
         arenas.clear();
@@ -215,6 +224,32 @@ public class AllAgainstAllGame {
 
     public void handleHit(Player attacker) {
         combatService.handleHit(attacker);
+    }
+
+    private void updateWorldDifficulty(ArenaState state) {
+        World world = state.getContext().getArenaAPI().getWorld();
+        if (world == null) {
+            return;
+        }
+
+        Difficulty current = world.getDifficulty();
+        if (current == Difficulty.PEACEFUL) {
+            state.setPreviousDifficulty(current);
+            world.setDifficulty(Difficulty.NORMAL);
+        }
+    }
+
+    private void restoreWorldDifficulty(ArenaState state) {
+        World world = state.getContext().getArenaAPI().getWorld();
+        if (world == null) {
+            return;
+        }
+
+        Difficulty previous = state.getPreviousDifficulty();
+        if (previous != null) {
+            world.setDifficulty(previous);
+            state.setPreviousDifficulty(null);
+        }
     }
 
     public void handleKill(GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context,

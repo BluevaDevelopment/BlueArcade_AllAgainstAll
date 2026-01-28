@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.Difficulty;
 
 import java.util.Map;
 import java.util.UUID;
@@ -22,6 +23,7 @@ public class ArenaState {
     private UUID winnerId;
     private boolean ended;
     private int supplyTicks;
+    private Difficulty previousDifficulty;
 
     public ArenaState(GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context) {
         this.context = context;
@@ -76,5 +78,13 @@ public class ArenaState {
 
     public void resetSupplyTicks() {
         supplyTicks = 0;
+    }
+
+    public Difficulty getPreviousDifficulty() {
+        return previousDifficulty;
+    }
+
+    public void setPreviousDifficulty(Difficulty previousDifficulty) {
+        this.previousDifficulty = previousDifficulty;
     }
 }

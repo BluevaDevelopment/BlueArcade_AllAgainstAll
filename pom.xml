@@ -7,7 +7,7 @@
 
     <groupId>net.blueva.arcade.modules</groupId>
     <artifactId>AllAgainstAll-Module</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
