@@ -140,15 +140,15 @@ public class AllAgainstAllModule implements GameModule<Player, Location, World, 
         }
 
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("wins", "Wins", "All Against All wins", StatScope.MODULE));
+                new StatDefinition("wins", moduleConfig.getStringFrom("language.yml", "stats.labels.wins", "Wins"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.wins", "All Against All wins"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("games_played", "Games Played", "All Against All games played", StatScope.MODULE));
+                new StatDefinition("games_played", moduleConfig.getStringFrom("language.yml", "stats.labels.games_played", "Games Played"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.games_played", "All Against All games played"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("kills", "Kills", "Opponents defeated in All Against All", StatScope.MODULE));
+                new StatDefinition("kills", moduleConfig.getStringFrom("language.yml", "stats.labels.kills", "Kills"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.kills", "Opponents defeated in All Against All"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("arrows_shot", "Arrows shot", "Arrows fired in All Against All", StatScope.MODULE));
+                new StatDefinition("arrows_shot", moduleConfig.getStringFrom("language.yml", "stats.labels.arrows_shot", "Arrows shot"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.arrows_shot", "Arrows fired in All Against All"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("hits_landed", "Hits landed", "Successful hits in All Against All", StatScope.MODULE));
+                new StatDefinition("hits_landed", moduleConfig.getStringFrom("language.yml", "stats.labels.hits_landed", "Hits landed"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.hits_landed", "Successful hits in All Against All"), StatScope.MODULE));
     }
 
     private void registerAchievements() {

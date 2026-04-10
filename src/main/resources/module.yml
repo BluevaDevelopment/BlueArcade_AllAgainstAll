@@ -1,8 +1,8 @@
-name: All Against All
+﻿name: All Against All
 id: all_against_all
-version: 1.0.1
+version: ${revision}
 type: MICROGAME
-api-version: 1.0
+api-version: 3.3
 main: net.blueva.arcade.modules.allagainstall.AllAgainstAllModule
 
 authors:
@@ -10,3 +10,4 @@ authors:
   - Whiron
 
 description: "Melee and ranged chaos with building enabled."
+

@@ -68,7 +68,11 @@ public class AllAgainstAllListener implements Listener {
         Player player = event.getPlayer();
         GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context = game.getContext(player);
 
-        if (context == null || !context.isPlayerPlaying(player) || context.getPhase() != GamePhase.PLAYING) {
+        if (context == null || !context.isPlayerPlaying(player)) {
+            return;
+        }
+
+        if (context.getPhase() != GamePhase.PLAYING) {
             event.setCancelled(true);
             return;
         }
@@ -83,7 +87,11 @@ public class AllAgainstAllListener implements Listener {
         Player player = event.getPlayer();
         GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context = game.getContext(player);
 
-        if (context == null || !context.isPlayerPlaying(player) || context.getPhase() != GamePhase.PLAYING) {
+        if (context == null || !context.isPlayerPlaying(player)) {
+            return;
+        }
+
+        if (context.getPhase() != GamePhase.PLAYING) {
             event.setCancelled(true);
             return;
         }

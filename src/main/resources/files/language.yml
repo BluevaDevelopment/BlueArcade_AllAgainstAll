@@ -34,6 +34,13 @@ vote_menu:
     - "<white>{votes}</white> <gray>votes.</gray>"
 
 stats:
+
+  descriptions:
+    wins: "All Against All wins"
+    games_played: "All Against All games played"
+    kills: "Opponents defeated in All Against All"
+    arrows_shot: "Arrows fired in All Against All"
+    hits_landed: "Successful hits in All Against All"
   labels:
     arrows_shot: "Arrows shot"
     hits_landed: "Hits landed"
