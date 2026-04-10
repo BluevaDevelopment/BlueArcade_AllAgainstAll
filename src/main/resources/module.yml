@@ -1,4 +1,4 @@
-﻿name: All Against All
+name: All Against All
 id: all_against_all
 version: ${revision}
 type: MICROGAME
@@ -10,4 +10,3 @@ authors:
   - Whiron
 
 description: "Melee and ranged chaos with building enabled."
-
