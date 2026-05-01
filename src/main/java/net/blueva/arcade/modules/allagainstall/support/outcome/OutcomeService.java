@@ -47,7 +47,7 @@ public class OutcomeService {
         List<Player> alivePlayers = new ArrayList<>(context.getAlivePlayers());
         String winMode = game.getWinMode(context);
         if (alivePlayers.size() == 1 && "last_standing".equals(winMode)) {
-            Player winner = alivePlayers.getFirst();
+            Player winner = alivePlayers.get(0);
             declareWinner(state, winner);
         } else if (alivePlayers.size() > 1 && "last_standing".equals(winMode)) {
             handleLastStandingTimeout(context);
@@ -68,7 +68,7 @@ public class OutcomeService {
             return;
         }
 
-        Player winner = topPlayers.getFirst();
+        Player winner = topPlayers.get(0);
         declareWinner(game.getArenaState(context), winner);
 
         for (int i = 1; i < topPlayers.size(); i++) {
@@ -88,7 +88,7 @@ public class OutcomeService {
             return;
         }
 
-        Player winner = sortedByKills.getFirst();
+        Player winner = sortedByKills.get(0);
         declareWinner(game.getArenaState(context), winner);
 
         for (int i = 1; i < sortedByKills.size(); i++) {

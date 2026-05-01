@@ -61,7 +61,7 @@ public class PlaceholderService {
         if (topPlayers.isEmpty()) {
             return null;
         }
-        return topPlayers.getFirst();
+        return topPlayers.get(0);
     }
 
     public List<Player> getPlayersSortedByKills(
