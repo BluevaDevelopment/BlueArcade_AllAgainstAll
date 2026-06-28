@@ -82,6 +82,11 @@ public class AllAgainstAllListener implements Listener {
             return;
         }
 
+        if (!hasPlayRegion(context)) {
+            event.setCancelled(true);
+            return;
+        }
+
         if (!context.isInsideBounds(event.getBlock().getLocation())) {
             event.setCancelled(true);
         }
@@ -97,6 +102,11 @@ public class AllAgainstAllListener implements Listener {
         }
 
         if (context.getPhase() != GamePhase.PLAYING) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (!hasPlayRegion(context)) {
             event.setCancelled(true);
             return;
         }
@@ -178,6 +188,11 @@ public class AllAgainstAllListener implements Listener {
             return;
         }
 
+        if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+            event.setCancelled(true);
+            return;
+        }
+
         double finalHealth = target.getHealth() - event.getFinalDamage();
         if (finalHealth > 0) {
             return;
@@ -209,5 +224,10 @@ public class AllAgainstAllListener implements Listener {
         }
 
         return null;
+    }
+
+    private boolean hasPlayRegion(GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context) {
+        return context.getDataAccess().getGameLocation("game.play_area.bounds.min") != null
+                && context.getDataAccess().getGameLocation("game.play_area.bounds.max") != null;
     }
 }
