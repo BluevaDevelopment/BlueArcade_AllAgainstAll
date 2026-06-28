@@ -118,12 +118,10 @@ public class CombatService {
                                    Player target, Player killer) {
         target.setGameMode(GameMode.SPECTATOR);
         target.getInventory().clear();
-        if (killer != null) {
-            context.getTitlesAPI().sendRaw(target,
-                    moduleConfig.getStringFrom("language.yml", "titles.you_died.title"),
-                    moduleConfig.getStringFrom("language.yml", "titles.you_died.subtitle"),
-                    0, 80, 20);
-        }
+        context.getTitlesAPI().sendRaw(target,
+                moduleConfig.getStringFrom("language.yml", "titles.you_died.title"),
+                moduleConfig.getStringFrom("language.yml", "titles.you_died.subtitle"),
+                0, 80, 20);
         broadcastDeathMessage(context, target, killer);
 
         int respawnDelayTicks = Math.max(0, moduleConfig.getInt("respawn.most_kills_delay_ticks", 60));

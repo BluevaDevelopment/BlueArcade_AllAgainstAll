@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.GameMode;
 
 public class AllAgainstAllListener implements Listener {
 
@@ -40,6 +41,10 @@ public class AllAgainstAllListener implements Listener {
             return;
         }
 
+        if (player.getGameMode() == GameMode.SPECTATOR) {
+            return;
+        }
+
         if (event.getTo() == null) {
             return;
         }
@@ -52,14 +57,14 @@ public class AllAgainstAllListener implements Listener {
         }
 
         if (!context.isInsideBounds(event.getTo())) {
-            game.handleRespawn(context, player);
+            game.handleNonCombatDeath(context, player);
             return;
         }
 
         Material deathBlock = getDeathBlock(context);
         Material blockBelowType = event.getTo().clone().subtract(0, 1, 0).getBlock().getType();
         if (blockBelowType == deathBlock) {
-            game.handleRespawn(context, player);
+            game.handleNonCombatDeath(context, player);
         }
     }
 
