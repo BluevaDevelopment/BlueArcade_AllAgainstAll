@@ -2,7 +2,7 @@ name: All Against All
 id: all_against_all
 version: ${revision}
 type: MICROGAME
-api-version: 3.3
+api-version: 3.4
 main: net.blueva.arcade.modules.allagainstall.AllAgainstAllModule
 
 authors:
