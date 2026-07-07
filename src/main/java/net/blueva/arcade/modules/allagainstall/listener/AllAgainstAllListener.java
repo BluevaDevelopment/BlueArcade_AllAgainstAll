@@ -41,7 +41,7 @@ public class AllAgainstAllListener implements Listener {
             return;
         }
 
-        if (player.getGameMode() == GameMode.SPECTATOR) {
+        if (context.isPlayerSpectating(player)) {
             return;
         }
 

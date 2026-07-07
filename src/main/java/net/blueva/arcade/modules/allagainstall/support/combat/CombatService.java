@@ -93,9 +93,9 @@ public class CombatService {
         }
 
         broadcastDeathMessage(context, target, killer);
-        context.eliminatePlayer(target, moduleConfig.getStringFrom("language.yml", "messages.eliminated"));
+        context.eliminatePlayer(target, moduleConfig.getTranslation(target, "messages.eliminated"));
         target.getInventory().clear();
-        target.setGameMode(GameMode.SPECTATOR);
+        context.setPlayerSpectating(target, true);
         sendDeathTitle(context, target, killer != null);
     }
 
@@ -116,11 +116,11 @@ public class CombatService {
 
     private void handleRespawnFlow(GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context,
                                    Player target, Player killer) {
-        target.setGameMode(GameMode.SPECTATOR);
+        context.setPlayerSpectating(target, true);
         target.getInventory().clear();
         context.getTitlesAPI().sendRaw(target,
-                moduleConfig.getStringFrom("language.yml", "titles.you_died.title"),
-                moduleConfig.getStringFrom("language.yml", "titles.you_died.subtitle"),
+                moduleConfig.getTranslation(target, "titles.you_died.title"),
+                moduleConfig.getTranslation(target, "titles.you_died.subtitle"),
                 0, 80, 20);
         broadcastDeathMessage(context, target, killer);
 
@@ -149,16 +149,16 @@ public class CombatService {
         if (killed) {
             context.getSoundsAPI().play(target, coreConfig.getSound("sounds.in_game.dead"));
             context.getTitlesAPI().sendRaw(target,
-                    moduleConfig.getStringFrom("language.yml", "titles.you_died.title"),
-                    moduleConfig.getStringFrom("language.yml", "titles.you_died.subtitle"),
+                    moduleConfig.getTranslation(target, "titles.you_died.title"),
+                    moduleConfig.getTranslation(target, "titles.you_died.subtitle"),
                     0, 80, 20);
             return;
         }
 
         context.getSoundsAPI().play(target, coreConfig.getSound("sounds.in_game.classified"));
         context.getTitlesAPI().sendRaw(target,
-                moduleConfig.getStringFrom("language.yml", "titles.classified.title"),
-                moduleConfig.getStringFrom("language.yml", "titles.classified.subtitle"),
+                moduleConfig.getTranslation(target, "titles.classified.title"),
+                moduleConfig.getTranslation(target, "titles.classified.subtitle"),
                 0, 80, 20);
     }
 
@@ -186,7 +186,7 @@ public class CombatService {
     }
 
     private String getRandomMessage(String path) {
-        List<String> messages = moduleConfig.getStringListFrom("language.yml", path);
+        List<String> messages = moduleConfig.getTranslationList(null, path);
         if (messages == null || messages.isEmpty()) {
             return null;
         }

@@ -84,11 +84,11 @@ public class AllAgainstAllGame {
 
             context.getSoundsAPI().play(player, coreConfig.getSound("sounds.starting_game.countdown"));
 
-            String title = coreConfig.getLanguage("titles.starting_game.title")
+            String title = coreConfig.getLanguage(player, "titles.starting_game.title")
                     .replace("{game_display_name}", moduleInfo.getName())
                     .replace("{time}", String.valueOf(secondsLeft));
 
-            String subtitle = coreConfig.getLanguage("titles.starting_game.subtitle")
+            String subtitle = coreConfig.getLanguage(player, "titles.starting_game.subtitle")
                     .replace("{game_display_name}", moduleInfo.getName())
                     .replace("{time}", String.valueOf(secondsLeft));
 
@@ -100,10 +100,10 @@ public class AllAgainstAllGame {
         for (Player player : context.getPlayers()) {
             if (!player.isOnline()) continue;
 
-            String title = coreConfig.getLanguage("titles.game_started.title")
+            String title = coreConfig.getLanguage(player, "titles.game_started.title")
                     .replace("{game_display_name}", moduleInfo.getName());
 
-            String subtitle = coreConfig.getLanguage("titles.game_started.subtitle")
+            String subtitle = coreConfig.getLanguage(player, "titles.game_started.subtitle")
                     .replace("{game_display_name}", moduleInfo.getName());
 
             context.getTitlesAPI().sendRaw(player, title, subtitle, 0, 20, 20);
@@ -193,11 +193,11 @@ public class AllAgainstAllGame {
         return mode;
     }
 
-    public String getModeLabel(String mode) {
+    public String getModeLabel(Player player, String mode) {
         if ("most_kills".equals(mode)) {
-            return moduleConfig.getStringFrom("language.yml", "scoreboard.mode_labels.most_kills");
+            return moduleConfig.getTranslation(player, "scoreboard.mode_labels.most_kills");
         }
-        return moduleConfig.getStringFrom("language.yml", "scoreboard.mode_labels.last_standing");
+        return moduleConfig.getTranslation(player, "scoreboard.mode_labels.last_standing");
     }
 
     public int getPlayerKills(GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context,
@@ -344,19 +344,18 @@ public class AllAgainstAllGame {
             }
 
             supplyService.giveTimedSupplies(context, state);
-
-            String actionBarTemplate = coreConfig.getLanguage("action_bar.in_game.global");
             for (Player player : allPlayers) {
+                String actionBarTemplate = coreConfig.getLanguage(player, "action_bar.in_game.global");
                 if (!player.isOnline()) continue;
 
                 Map<String, String> customPlaceholders = placeholderService.buildPlaceholders(player);
-                customPlaceholders.put("time", String.valueOf(timeLeft[0]));
+                customPlaceholders.put("time", formatCountdownTime(timeLeft[0]));
                 customPlaceholders.put("alive", String.valueOf(alivePlayers.size()));
                 customPlaceholders.put("spectators", String.valueOf(context.getSpectators().size()));
 
                 if (actionBarTemplate != null) {
                     String actionBarMessage = actionBarTemplate
-                            .replace("{time}", String.valueOf(timeLeft[0]))
+                            .replace("{time}", formatCountdownTime(timeLeft[0]))
                             .replace("{round}", String.valueOf(context.getCurrentRound()))
                             .replace("{round_max}", String.valueOf(context.getMaxRounds()));
                     context.getMessagesAPI().sendActionBar(player, actionBarMessage);
@@ -366,4 +365,10 @@ public class AllAgainstAllGame {
             }
         }, 0L, 20L);
     }
+
+    private static String formatCountdownTime(int seconds) {
+        int safeSeconds = Math.max(0, seconds);
+        return String.format("%02d:%02d", safeSeconds / 60, safeSeconds % 60);
+    }
+
 }

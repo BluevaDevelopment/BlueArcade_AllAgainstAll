@@ -30,7 +30,7 @@ public class AllAgainstAllSetup implements GameSetupHandler {
         String subcommand = context.getArg(context.getStartIndex() - 1);
         if (subcommand == null) {
             context.getMessagesAPI().sendRaw(context.getPlayer(),
-                    module.getModuleConfig().getStringFrom("language.yml", "setup_messages.usage"));
+                    module.getModuleConfig().getTranslation(context.getPlayer(), "setup_messages.usage"));
             return true;
         }
 
@@ -45,7 +45,7 @@ public class AllAgainstAllSetup implements GameSetupHandler {
         }
 
         context.getMessagesAPI().sendRaw(context.getPlayer(),
-                module.getCoreConfig().getLanguage("admin_commands.errors.unknown_subcommand"));
+                module.getCoreConfig().getLanguage(context.getPlayer(), "admin_commands.errors.unknown_subcommand"));
         return true;
     }
 
@@ -87,14 +87,14 @@ public class AllAgainstAllSetup implements GameSetupHandler {
     private boolean handleSetMode(SetupContext<Player, CommandSender, Location> context) {
         if (!context.hasHandlerArgs(1)) {
             context.getMessagesAPI().sendRaw(context.getPlayer(),
-                    module.getModuleConfig().getStringFrom("language.yml", "setup_messages.usage_setmode"));
+                    module.getModuleConfig().getTranslation(context.getPlayer(), "setup_messages.usage_setmode"));
             return true;
         }
 
         String mode = context.getHandlerArg(0).toLowerCase();
         if (!mode.equals("last_standing") && !mode.equals("most_kills")) {
             context.getMessagesAPI().sendRaw(context.getPlayer(),
-                    module.getModuleConfig().getStringFrom("language.yml", "setup_messages.usage_setmode"));
+                    module.getModuleConfig().getTranslation(context.getPlayer(), "setup_messages.usage_setmode"));
             return true;
         }
 
@@ -102,7 +102,7 @@ public class AllAgainstAllSetup implements GameSetupHandler {
         context.getData().save();
 
         context.getMessagesAPI().sendRaw(context.getPlayer(),
-                module.getModuleConfig().getStringFrom("language.yml", "setup_messages.mode_set")
+                module.getModuleConfig().getTranslation(context.getPlayer(), "setup_messages.mode_set")
                         .replace("{mode}", mode));
         return true;
     }
@@ -112,7 +112,7 @@ public class AllAgainstAllSetup implements GameSetupHandler {
 
         if (!context.getSelection().hasCompleteSelection(player)) {
             context.getMessagesAPI().sendRaw(player,
-                    module.getModuleConfig().getStringFrom("language.yml", "setup_messages.must_use_stick"));
+                    module.getModuleConfig().getTranslation(context.getPlayer(), "setup_messages.must_use_stick"));
             return true;
         }
 
@@ -128,7 +128,7 @@ public class AllAgainstAllSetup implements GameSetupHandler {
         int blocks = x * y * z;
 
         context.getMessagesAPI().sendRaw(player,
-                module.getModuleConfig().getStringFrom("language.yml", "setup_messages.region_set")
+                module.getModuleConfig().getTranslation(context.getPlayer(), "setup_messages.region_set")
                         .replace("{blocks}", String.valueOf(blocks))
                         .replace("{x}", String.valueOf(x))
                         .replace("{y}", String.valueOf(y))

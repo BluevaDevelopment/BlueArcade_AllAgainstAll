@@ -1,10 +1,17 @@
-file_version: 1
+#  ____  _               _                      _
+# | __ )| |_   _  ___   / \   _ __ ___ __ _  __| | ___
+# |  _ \| | | | |/ _ \ / _ \ | '__/ __/ _` |/ _` |/ _ \
+# | |_) | | |_| |  __// ___ \| | | (_| (_| | (_| |  __/
+# |____/|_|\__,_|\___/_/   \_|_|  \___\__,_|\__,_|\___|
+#
+# [!] Arcade by Blueva | https://blueva.net/store/blue-arcade [!]
+
 category:
-  id: all_against_all
+  id: "all_against_all"
   name: "All Against All"
   description:
     - "Achievements tied to All Against All."
-  icon: IRON_SWORD
+  icon: "IRON_SWORD"
   sort_order: 22
 
 achievements:
@@ -12,7 +19,7 @@ achievements:
     name: "Arena Regular"
     description:
       - "Play All Against All matches."
-    icon: IRON_SWORD
+    icon: "IRON_SWORD"
     phases:
       1:
         name: "First blood"
@@ -84,7 +91,7 @@ achievements:
     name: "Ruthless"
     description:
       - "Eliminate opponents."
-    icon: DIAMOND_SWORD
+    icon: "DIAMOND_SWORD"
     phases:
       1:
         name: "Opening strike"
@@ -156,7 +163,7 @@ achievements:
     name: "Precise Striker"
     description:
       - "Land melee or ranged hits."
-    icon: BOW
+    icon: "BOW"
     phases:
       1:
         name: "Measured swing"

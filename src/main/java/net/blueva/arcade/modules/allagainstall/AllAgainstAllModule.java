@@ -28,6 +28,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
+import net.blueva.arcade.api.setup.ModuleSetupCommand;
+import net.blueva.arcade.api.setup.ModuleSetupMetadata;
+import net.blueva.arcade.api.setup.ModuleSetupStep;
+import net.blueva.arcade.api.setup.ModuleSetupStatusCheck;
+import java.util.List;
 
 public class AllAgainstAllModule implements GameModule<Player, Location, World, Material, ItemStack, Sound, Block, Entity, Listener, EventPriority> {
 
@@ -61,8 +66,8 @@ public class AllAgainstAllModule implements GameModule<Player, Location, World, 
             voteMenu.registerGame(
                     moduleInfo.getId(),
                     Material.valueOf(moduleConfig.getString("menus.vote.item")),
-                    moduleConfig.getStringFrom("language.yml", "vote_menu.name"),
-                    moduleConfig.getStringListFrom("language.yml", "vote_menu.lore")
+                    moduleConfig.getTranslation(null, "vote_menu.name"),
+                    moduleConfig.getTranslationList(null, "vote_menu.lore")
             );
         }
     }
@@ -129,9 +134,8 @@ public class AllAgainstAllModule implements GameModule<Player, Location, World, 
     }
 
     private void registerConfigs() {
-        moduleConfig.register("language.yml", 1);
-        moduleConfig.register("settings.yml", 1);
-        moduleConfig.register("achievements.yml", 1);
+        moduleConfig.register("settings.yml");
+        moduleConfig.register("achievements.yml");
     }
 
     private void registerStats() {
@@ -140,15 +144,15 @@ public class AllAgainstAllModule implements GameModule<Player, Location, World, 
         }
 
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("wins", moduleConfig.getStringFrom("language.yml", "stats.labels.wins", "Wins"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.wins", "All Against All wins"), StatScope.MODULE));
+                new StatDefinition("wins", moduleConfig.getTranslation(null, "stats.labels.wins"), moduleConfig.getTranslation(null, "stats.descriptions.wins"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("games_played", moduleConfig.getStringFrom("language.yml", "stats.labels.games_played", "Games Played"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.games_played", "All Against All games played"), StatScope.MODULE));
+                new StatDefinition("games_played", moduleConfig.getTranslation(null, "stats.labels.games_played"), moduleConfig.getTranslation(null, "stats.descriptions.games_played"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("kills", moduleConfig.getStringFrom("language.yml", "stats.labels.kills", "Kills"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.kills", "Opponents defeated in All Against All"), StatScope.MODULE));
+                new StatDefinition("kills", moduleConfig.getTranslation(null, "stats.labels.kills"), moduleConfig.getTranslation(null, "stats.descriptions.kills"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("arrows_shot", moduleConfig.getStringFrom("language.yml", "stats.labels.arrows_shot", "Arrows shot"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.arrows_shot", "Arrows fired in All Against All"), StatScope.MODULE));
+                new StatDefinition("arrows_shot", moduleConfig.getTranslation(null, "stats.labels.arrows_shot"), moduleConfig.getTranslation(null, "stats.descriptions.arrows_shot"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("hits_landed", moduleConfig.getStringFrom("language.yml", "stats.labels.hits_landed", "Hits landed"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.hits_landed", "Successful hits in All Against All"), StatScope.MODULE));
+                new StatDefinition("hits_landed", moduleConfig.getTranslation(null, "stats.labels.hits_landed"), moduleConfig.getTranslation(null, "stats.descriptions.hits_landed"), StatScope.MODULE));
     }
 
     private void registerAchievements() {
@@ -157,4 +161,41 @@ public class AllAgainstAllModule implements GameModule<Player, Location, World, 
             achievementsAPI.registerModuleAchievements(moduleInfo.getId(), "achievements.yml");
         }
     }
+
+
+    @Override
+    public boolean requiresSpawnCapacityValidation() {
+        return false;
+    }
+
+    @Override
+    public ModuleSetupMetadata getSetupMetadata() {
+        return new ModuleSetupMetadata() {
+
+            @Override
+            public List<ModuleSetupStep> getSetupSteps() {
+                return List.of(
+                        new ModuleSetupStep("setmode", true, "Configure Setmode", "Configure the module-specific setmode setup data.", List.of("/baa game <arena> all_against_all setmode"), "mode"),
+                        new ModuleSetupStep("setregion", true, "Configure Setregion", "Configure the module-specific setregion setup data.", List.of("/baa game <arena> all_against_all setregion"), "selection region")
+                );
+            }
+
+            @Override
+            public List<ModuleSetupCommand> getSetupCommands() {
+                return List.of(
+                        new ModuleSetupCommand("setmode", "/baa game <arena> all_against_all setmode", "Configure setmode setup data.", true),
+                        new ModuleSetupCommand("setregion", "/baa game <arena> all_against_all setregion", "Configure setregion setup data.", true)
+                );
+            }
+
+            @Override
+            public List<ModuleSetupStatusCheck<?, ?, ?>> getStatusChecks() {
+                return List.of(
+                        new ModuleSetupStatusCheck<>("setmode", true, "Set the game mode.", context -> context.getData().has("basic.win_mode") || context.getData().has("basic.mode")),
+                        new ModuleSetupStatusCheck<>("setregion", true, "Select the play area region.", context -> context.getData().has("game.play_area.bounds.min.x") && context.getData().has("game.play_area.bounds.max.x"))
+                );
+            }
+        };
+    }
+
 }

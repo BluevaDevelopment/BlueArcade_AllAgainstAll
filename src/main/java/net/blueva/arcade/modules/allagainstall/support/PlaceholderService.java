@@ -35,7 +35,7 @@ public class PlaceholderService {
             placeholders.put("alive", String.valueOf(context.getAlivePlayers().size()));
             placeholders.put("spectators", String.valueOf(context.getSpectators().size()));
             placeholders.put("kills", String.valueOf(game.getPlayerKills(context, player)));
-            placeholders.put("mode", game.getModeLabel(game.getWinMode(context)));
+            placeholders.put("mode", game.getModeLabel(player, game.getWinMode(context)));
             if ("most_kills".equals(game.getWinMode(context))) {
                 List<Player> topPlayers = getTopPlayersByKills(context);
                 for (int i = 0; i < 5; i++) {
