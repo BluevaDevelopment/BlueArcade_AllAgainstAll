@@ -116,7 +116,7 @@ public class CombatService {
 
     private void handleRespawnFlow(GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context,
                                    Player target, Player killer) {
-        context.setPlayerSpectating(target, true);
+        target.setGameMode(GameMode.SPECTATOR);
         target.getInventory().clear();
         context.getTitlesAPI().sendRaw(target,
                 moduleConfig.getTranslation(target, "titles.you_died.title"),
