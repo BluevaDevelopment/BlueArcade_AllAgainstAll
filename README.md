@@ -1,7 +1,7 @@
 # BlueArcade - All Against All
 
 This resource is a **BlueArcade 3 module** and requires the core plugin to run.
-Get BlueArcade 3 here: https://store.blueva.net/resources/resource/1-blue-arcade/
+Get BlueArcade 3 here: https://blueva.net/store/blue-arcade
 
 ## Description
 Melee and ranged chaos with building enabled. Win by being the last survivor or by scoring the most kills.
