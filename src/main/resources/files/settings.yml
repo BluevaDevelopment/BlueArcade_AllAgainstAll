@@ -17,6 +17,8 @@ respawn:
   most_kills_delay_ticks: 60
 
 combat:
+  # Drop the victim's inventory on the ground when eliminated in last_standing mode
+  drop_items_on_death: true
   kill_regeneration:
     # Set to 0 to disable full heal on kill
     health: 8.0
