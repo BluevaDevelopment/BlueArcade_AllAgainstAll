@@ -118,6 +118,5 @@ public class OutcomeService {
 
         state.setWinner(winner.getUniqueId());
         statsAPI.addModuleStat(winner, moduleInfo.getId(), "wins", 1);
-        statsAPI.addGlobalStat(winner, "wins", 1);
     }
 }
