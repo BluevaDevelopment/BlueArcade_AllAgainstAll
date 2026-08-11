@@ -158,6 +158,7 @@ public class AllAgainstAllListener implements Listener {
         }
 
         game.handleHit(attacker);
+        game.recordHit(context, target, attacker);
 
         double finalHealth = target.getHealth() - event.getFinalDamage();
         if (finalHealth > 0) {
